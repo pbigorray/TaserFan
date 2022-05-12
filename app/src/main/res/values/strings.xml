@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">TaserFan</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="settings">Configuracion</string>
+    <string name="settings_theme_key">Tema</string>
+    <string name="settings_theme_title">Tema de la aplicacion</string>
+    <string name="settings_theme_dialog_title">Selecciona el tema de la aplicacion</string>
+    <string name="default_string">Por defecto del sistema</string>
+    <string name="light">Dia</string>
+    <string name="dark">Noche</string>
+
+
+    <string name="ip">Direccion del servidor</string>
+    <string name="ip_default">http://10.11.0.191</string>
+    <string name="puerto">Puerto</string>
+    <string name="puerto_default">4567</string>
+
+
+</resources>

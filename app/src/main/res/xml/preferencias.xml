@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Servidor">
+        <EditTextPreference
+            android:defaultValue="http://10.11.0.191"
+            android:inputType="text"
+            android:key="ip"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/ip"/>
+        <EditTextPreference
+            android:defaultValue="4567"
+            android:inputType="text"
+            android:key="puerto"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/puerto" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Tema">
+        <androidx.preference.ListPreference
+            android:dialogTitle="@string/settings_theme_dialog_title"
+            android:entries="@array/settings_theme_entries"
+            android:entryValues="@array/settings_theme_values"
+            android:key="@string/settings_theme_key"
+            android:title="@string/settings_theme_title" />
+    </PreferenceCategory>
+</PreferenceScreen>
