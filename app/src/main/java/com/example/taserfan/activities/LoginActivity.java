@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
 import com.example.taserfan.API.Result;
+import com.example.taserfan.activities.preferencias.GestionPreferencias;
 import com.example.taserfan.activities.preferencias.Preferencias;
 import com.example.taserfan.activities.preferencias.ThemeSetup;
 import com.example.taserfan.objects.AuthenticationData;
@@ -54,7 +55,7 @@ public class LoginActivity extends BaseActivity implements CallInterface {
     @Override
     public void doInBackground() {
         AuthenticationData auth=new AuthenticationData(user.getText().toString(),pass.getText().toString());
-        String url=API.Routes.AUTHENTICATE;
+        String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this)+ API.Routes.AUTHENTICATE;
         result= Connector.getConector().post(Empleado.class,auth,url);
     }
 
@@ -63,6 +64,7 @@ public class LoginActivity extends BaseActivity implements CallInterface {
         if (result instanceof Result.Success){
             LoggedInUserRepository.getInstance().login(((Result.Success<Empleado>)result).getData());
             Intent intent = new Intent(getApplicationContext(),PortalEmpleado.class);
+            Toast.makeText(this, "vamossss", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }else{
             Result.Error error =(Result.Error)result;

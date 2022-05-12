@@ -26,8 +26,7 @@ public class Connector {
     }
 
     public <T> List<T> getAsList(Class<T> clazz, String path) {
-        String url = API.Routes.URL + path;
-        String jsonResponse = callMethodsObject.get(url);
+        String jsonResponse = callMethodsObject.get(path);
         if (jsonResponse != null)
             return conversor.fromJsonList(jsonResponse, clazz);
         return null;
@@ -35,8 +34,8 @@ public class Connector {
 
 
     public <T> T get(Class<T> clazz, String path) {
-        String url = API.Routes.URL + path;
-        String jsonResponse = callMethodsObject.get(url);
+
+        String jsonResponse = callMethodsObject.get(path);
         if (jsonResponse != null)
             return conversor.fromJson(jsonResponse, clazz);
         return null;
@@ -44,8 +43,7 @@ public class Connector {
 
     public <T> Result<T> getResult(Class<T> clazz, String path) {
         try {
-            String url = API.Routes.URL + path;
-            Response<ResponseBody> jsonResponse = callMethodsObject.getResult(url);
+            Response<ResponseBody> jsonResponse = callMethodsObject.getResult(path);
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
             else if (jsonResponse != null)
@@ -59,10 +57,10 @@ public class Connector {
 
     public <T> Result<T> post(Class<T> clazz, Object data, String path) {
         try {
-            String url = API.Routes.URL + path;
+
             String jsonObject = conversor.toJson(data);
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
-            Response<ResponseBody> jsonResponse = callMethodsObject.postResult(url, body);
+            Response<ResponseBody> jsonResponse = callMethodsObject.postResult(path, body);
 
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
@@ -77,10 +75,9 @@ public class Connector {
 
     public <T> Result<T> put(Class<T> clazz, T data, String path) {
         try {
-            String url = API.Routes.URL + path;
             String jsonObject = conversor.toJson(data);
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
-            Response<ResponseBody> jsonResponse = callMethodsObject.putResult(url, body);
+            Response<ResponseBody> jsonResponse = callMethodsObject.putResult(path, body);
 
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
@@ -95,8 +92,7 @@ public class Connector {
 
     public <T> Result<T> deleteResult(Class<T> clazz, String path) {
         try {
-            String url = API.Routes.URL + path;
-            Response<ResponseBody> jsonResponse = callMethodsObject.deleteResult(url);
+            Response<ResponseBody> jsonResponse = callMethodsObject.deleteResult(path);
             if (jsonResponse != null && jsonResponse.code() == 200)
                 return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
             else if (jsonResponse != null) {

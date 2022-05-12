@@ -1,6 +1,8 @@
 package com.example.taserfan.API;
 
 
+import com.example.taserfan.activities.preferencias.GestionPreferencias;
+
 import java.io.IOException;
 
 
