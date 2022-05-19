@@ -6,4 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".activities.VehiculoView">
 
+    <RadioGroup
+        android:id="@+id/tipos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recicle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/vehiculos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Todos" />
+
+        <RadioButton
+            android:id="@+id/coche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Coche" />
+
+        <RadioButton
+            android:id="@+id/moto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moto" />
+
+        <RadioButton
+            android:id="@+id/bici"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bici" />
+
+        <RadioButton
+            android:id="@+id/patinete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Patinete" />
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recicle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tipos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

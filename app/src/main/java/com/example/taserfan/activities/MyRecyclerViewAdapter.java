@@ -1,7 +1,7 @@
 package com.example.taserfan.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.taserfan.API.API;
 import com.example.taserfan.R;
-import com.example.taserfan.base.ImageDownloader;
 import com.example.taserfan.objects.Vehiculo;
 
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>{
 
-    private Vehiculo vehiculo;
+    private List<Vehiculo> vehiculos;
     private LayoutInflater inflater;
     private  View.OnClickListener listener;
 
-    public MyRecyclerViewAdapter (Context context,Vehiculo vehiculo){
-        this.vehiculo=vehiculo;
+    public MyRecyclerViewAdapter (Context context,List<Vehiculo> vehiculos){
+        this.vehiculos =vehiculos;
         inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -48,10 +45,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 //        String url= Parameters.URL_ICON_PRE+l.weather.get(0).icon+Parameters.URL_ICON_POST;
 //        ImageDownloader.DownloadImage(url, holder.icon);
 //
-//        holder.decripcion.setText(l.weather.get(0).description);
-//        holder.datosTemp.setText(""+l.main.temp);
-//        holder.datosMax.setText(""+l.main.temp_max);
-//        holder.datosMin.setText(""+l.main.temp_min);
+        holder.matricula.setText(vehiculos.get(position).getMatricula());
+        holder.marca.setText(vehiculos.get(position).getMarca());
+        holder.color.setText(vehiculos.get(position).getColor());
+        holder.estado.setText(vehiculos.get(position).getEstado());
 //
 //        Date date= new Date((long) l.dt*1000);
 //        //simpleDateFormat.setTimeZoneFormat(TimeZone.getDefault());
@@ -65,32 +62,31 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return 0;
+        return vehiculos.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setNewData(List<Vehiculo> vehiculo) {
+        this.vehiculos =vehiculo;
+        notifyDataSetChanged();
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
        ImageView icon;
-       TextView dia;
-       TextView fecha;
-       TextView hora;
-       TextView decripcion;
-       TextView datosTemp;
-       TextView datosMax;
-       TextView datosMin;
-
+       TextView matricula;
+       TextView marca;
+       TextView color;
+       TextView estado;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            icon=itemView.findViewById(R.id.icon);
-//            dia=itemView.findViewById(R.id.dia);
-//            fecha=itemView.findViewById(R.id.fecha);
-//            hora=itemView.findViewById(R.id.hora);
-//            decripcion=itemView.findViewById(R.id.descripcion);
-//            datosTemp=itemView.findViewById(R.id.datosTemp);
-//            datosMax=itemView.findViewById(R.id.datosMax);
-//            datosMin=itemView.findViewById(R.id.datosMIn);
+            icon=itemView.findViewById(R.id.icon);
+            matricula=itemView.findViewById(R.id.matricula);
+            marca=itemView.findViewById(R.id.marca);
+            color=itemView.findViewById(R.id.color);
+            estado=itemView.findViewById(R.id.estado);
+
         }
     }
 }

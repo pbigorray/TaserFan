@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="uwu"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintBottom_toBottomOf="@+id/dia"
+        app:layout_constraintStart_toEndOf="@+id/dia"
+        app:layout_constraintTop_toTopOf="@+id/dia" />
+
+    <TextView
+        android:id="@+id/matricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="uwu"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintBottom_toBottomOf="@+id/da"
+        app:layout_constraintStart_toEndOf="@+id/da"
+        app:layout_constraintTop_toTopOf="@+id/da" />
+
+    <TextView
+        android:id="@+id/dia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Marca"
+        android:textStyle="bold"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintTop_toTopOf="@+id/icon" />
+
+    <TextView
+        android:id="@+id/da"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Matricula"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dia"
+        app:layout_constraintStart_toStartOf="@+id/dia" />
+
+    <TextView
+        android:id="@+id/estado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="96dp"
+        android:text="uwu"
+        android:textStyle="bold"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintBottom_toBottomOf="@+id/marca"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/marca"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="descrip"
+        android:theme="@style/Theme.TaserFan"
+        app:layout_constraintEnd_toEndOf="@+id/estado"
+        app:layout_constraintStart_toStartOf="@+id/estado"
+        app:layout_constraintTop_toTopOf="@+id/matricula" />
 </androidx.constraintlayout.widget.ConstraintLayout>

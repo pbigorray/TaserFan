@@ -13,10 +13,10 @@
         android:theme="@style/Theme.TaserFan"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.VehiculoView"
+            android:name=".activities.SecundaryActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PortalEmpleado"
+            android:name=".activities.VehiculoView"
             android:exported="false" />
         <activity
             android:name=".activities.preferencias.Preferencias"

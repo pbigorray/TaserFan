@@ -23,6 +23,7 @@ import com.example.taserfan.R;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
 import com.example.taserfan.base.LoggedInUserRepository;
+import com.example.taserfan.objects.Vehiculo;
 
 public class LoginActivity extends BaseActivity implements CallInterface {
     private EditText user;
@@ -56,14 +57,16 @@ public class LoginActivity extends BaseActivity implements CallInterface {
     public void doInBackground() {
         AuthenticationData auth=new AuthenticationData(user.getText().toString(),pass.getText().toString());
         String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this)+ API.Routes.AUTHENTICATE;
-        result= Connector.getConector().post(Empleado.class,auth,url);
+//        result= Connector.getConector().post(Empleado.class,auth,url);
+        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
+
     }
 
     @Override
     public void doInUI() {
         if (result instanceof Result.Success){
             LoggedInUserRepository.getInstance().login(((Result.Success<Empleado>)result).getData());
-            Intent intent = new Intent(getApplicationContext(),PortalEmpleado.class);
+            Intent intent = new Intent(getApplicationContext(),VehiculoView.class);
             Toast.makeText(this, "vamossss", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }else{

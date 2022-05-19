@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout-w936dp/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout-w936dp/second_activity.xml" value="0.4118004866180049" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout-w936dp/simple_element.xml" value="1.0" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout/activity_login.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout/activity_portal_empleado.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout/activity_secundary.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout/activity_vehiculo_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout/prueba.xml" value="0.358695652173913" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/layout/simple_element.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/anbus/Downloads/TaserFanBase-master/app/src/main/res/menu/preferencias.xml" value="0.36666666666666664" />
