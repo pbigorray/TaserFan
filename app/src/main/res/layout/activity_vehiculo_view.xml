@@ -18,12 +18,14 @@
 
         <RadioButton
             android:id="@+id/vehiculos"
+            android:onClick="onRadioButtonClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Todos" />
 
         <RadioButton
             android:id="@+id/coche"
+            android:onClick="onRadioButtonClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Coche" />
@@ -32,16 +34,19 @@
             android:id="@+id/moto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
             android:text="Moto" />
 
         <RadioButton
             android:id="@+id/bici"
+            android:onClick="onRadioButtonClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Bici" />
 
         <RadioButton
             android:id="@+id/patinete"
+            android:onClick="onRadioButtonClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Patinete" />

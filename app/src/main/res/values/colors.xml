@@ -11,4 +11,16 @@
     <color name="moraico">#F0D081DB</color>
     <color name="moraico_muy_ocuro">#74418C</color>
     <color name="moraico_oscuro">#F0AB81DB</color>
+
+
+
+    <color name="rojo">#F0FF0000</color>
+    <color name="verde">#F000EA0C</color>
+    <color name="azul">#F0000DFF</color>
+    <color name="amarillo">#F0FFDD00</color>
+    <color name="negro">#F0333333</color>
+    <color name="blanco">#F0E4E4E4</color>
+
+
+
 </resources>

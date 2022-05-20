@@ -6,8 +6,8 @@ public class Moto extends Vehiculo{
     private int velocidadMax;
     private int cilindrada;
 
-    public Moto(String matricula, String marca, String color, String estado) {
-        super(matricula, marca, color, estado);
+    public Moto(String matricula, String marca, String color, String estado,Tipo tipo) {
+        super(matricula, marca, color, estado,tipo);
     }
 
 //    public Moto(String matricula, String marca, String descripcion, String bateria, String tipoCarnet, String color, String estado, Date fechaAdq, double precioHora, int velocidadMax, int cilindrada) {

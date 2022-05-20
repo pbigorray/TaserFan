@@ -6,8 +6,8 @@ public class Patinete extends Vehiculo {
     private int numRuedas;
     private int tamanyo;
 
-    public Patinete(String matricula, String marca, String color, String estado) {
-        super(matricula, marca, color, estado);
+    public Patinete(String matricula, String marca, String color, String estado,Tipo tipo) {
+        super(matricula, marca, color, estado,tipo);
     }
 
 //    public Patinete(String matricula, String marca, String descripcion, String bateria, String tipoCarnet, String color, String estado, Date fechaAdq, double precioHora, int numRuedas, int tamanyo) {

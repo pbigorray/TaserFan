@@ -2,6 +2,9 @@ package com.example.taserfan.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 
 import com.example.taserfan.R;
+import com.example.taserfan.objects.Tipo;
 import com.example.taserfan.objects.Vehiculo;
 
 import java.util.List;
@@ -22,10 +29,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private List<Vehiculo> vehiculos;
     private LayoutInflater inflater;
     private  View.OnClickListener listener;
+    private Context context;
+
 
     public MyRecyclerViewAdapter (Context context,List<Vehiculo> vehiculos){
         this.vehiculos =vehiculos;
         inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context=context;
     }
 
     @NonNull
@@ -38,6 +48,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     public void  setListener(View.OnClickListener listener){this.listener=listener;}
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -45,6 +56,45 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 //        String url= Parameters.URL_ICON_PRE+l.weather.get(0).icon+Parameters.URL_ICON_POST;
 //        ImageDownloader.DownloadImage(url, holder.icon);
 //
+
+
+        Tipo t=vehiculos.get(position).getTipo();
+        switch (t){
+            case MOTO:
+                holder.icon.setImageResource(R.drawable.ic_moto);
+                break;
+            case COCHE:
+                holder.icon.setImageResource(R.drawable.ic_baseline_directions_car_24);
+                break;
+            case PATINETE:
+                holder.icon.setImageResource(R.drawable.ic_patinete);
+                break;
+            case BICICLETA:
+                holder.icon.setImageResource(R.drawable.ic_bici);
+                break;
+        }
+        String color=vehiculos.get(position).getColor();
+        switch (color){
+            case "verde":
+                holder.icon.setColorFilter(ContextCompat.getColor(context,R.color.verde));
+                break;
+            case "negro":
+                holder.icon.setColorFilter(ContextCompat.getColor(context,R.color.negro));
+                break;
+            case "blanco":
+                holder.icon.setColorFilter(ContextCompat.getColor(context,R.color.blanco));
+                break;
+            case "rojo":
+                holder.icon.setColorFilter(ContextCompat.getColor(context,R.color.rojo));
+                break;
+            case "azul":
+                holder.icon.setColorFilter(ContextCompat.getColor(context, R.color.azul));
+                break;
+            case "amarillo":
+                holder.icon.setColorFilter(ContextCompat.getColor(context,R.color.amarillo));
+                break;
+
+        }
         holder.matricula.setText(vehiculos.get(position).getMatricula());
         holder.marca.setText(vehiculos.get(position).getMarca());
         holder.color.setText(vehiculos.get(position).getColor());
@@ -58,6 +108,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 //        holder.hora.setText(new SimpleDateFormat("HH:mm").format(date));
 
     }
+
 
 
     @Override

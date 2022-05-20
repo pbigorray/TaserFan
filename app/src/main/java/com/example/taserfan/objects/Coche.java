@@ -6,8 +6,8 @@ public class Coche extends Vehiculo{
     private int numPlazas;
     private int numPuertas;
 
-    public Coche(String matricula, String marca, String color, String estado) {
-        super(matricula, marca, color, estado);
+    public Coche(String matricula, String marca, String color, String estado,Tipo tipo) {
+        super(matricula, marca, color, estado,tipo);
     }
 
 //    public Coche(String matricula, String marca, String descripcion, String bateria, String tipoCarnet, String color, String estado, Date fechaAdq, double precioHora, int numPlazas, int numPuertas) {

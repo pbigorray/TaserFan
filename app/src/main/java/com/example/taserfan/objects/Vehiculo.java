@@ -8,15 +8,20 @@ public class Vehiculo implements Serializable {
     private String matricula,marca,descripcion,bateria,tipoCarnet,color,estado;
     private Date fechaAdq;
     private double precioHora;
+    private Tipo tipo;
 
-    public Vehiculo(String matricula, String marca, String color, String estado) {
+
+    public Vehiculo(String matricula, String marca, String color, String estado,Tipo tipo) {
         this.matricula = matricula;
         this.marca = marca;
         this.color = color;
         this.estado = estado;
+        this.tipo=tipo;
     }
 
-
+    public Tipo getTipo() {
+        return tipo;
+    }
 
     public String getMatricula() {
         return matricula;

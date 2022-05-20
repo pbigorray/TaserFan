@@ -10,6 +10,8 @@ public class API {
 
         public static final String AUTHENTICATE = "/authenticate";
         public static final String VEHICULOS ="/vehiculos";
+        public static  final String TIPO_VEHICULO="/tipo";
+
 
     }
 

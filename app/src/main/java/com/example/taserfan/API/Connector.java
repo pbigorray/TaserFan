@@ -31,6 +31,22 @@ public class Connector {
             return conversor.fromJsonList(jsonResponse, clazz);
         return null;
     }
+    public <T> List<T> getAsListObject(Class<T> clazz,Object data, String path) {
+
+        try {
+
+            String jsonObject = conversor.toJson(data);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
+            Response<ResponseBody> jsonResponse = callMethodsObject.postResult(path, body);
+
+            if (jsonResponse != null && jsonResponse.code() == 200)
+                return conversor.fromJsonList(jsonResponse.body().string(), clazz);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public <T> T get(Class<T> clazz, String path) {
