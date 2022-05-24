@@ -5,13 +5,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Vehiculo implements Serializable {
-    private String matricula,marca,descripcion,bateria,tipoCarnet,color,estado;
-    private Date fechaAdq;
+    private String matricula,marca,descripcion,tipoCarnet,color,estado;
+    private String  fechaAdq;
+    private int bateria;
     private double precioHora;
     private Tipo tipo;
 
+    public Vehiculo(String matricula, String marca, String descripcion, int bateria, String tipoCarnet, String color, String estado, String fechaAdq, double precioHora, Tipo tipo) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.descripcion = descripcion;
+        this.bateria = bateria;
+        this.tipoCarnet = tipoCarnet;
+        this.color = color;
+        this.estado = estado;
+        this.fechaAdq = fechaAdq;
+        this.precioHora = precioHora;
+        this.tipo = tipo;
+    }
 
-    public Vehiculo(String matricula, String marca, String color, String estado,Tipo tipo) {
+    public Vehiculo(String matricula, String marca, String color, String estado, Tipo tipo) {
         this.matricula = matricula;
         this.marca = marca;
         this.color = color;
@@ -35,7 +48,7 @@ public class Vehiculo implements Serializable {
         return descripcion;
     }
 
-    public String getBateria() {
+    public int getBateria() {
         return bateria;
     }
 
@@ -51,7 +64,7 @@ public class Vehiculo implements Serializable {
         return estado;
     }
 
-    public Date getFechaAdq() {
+    public String getFechaAdq() {
         return fechaAdq;
     }
 
@@ -59,5 +72,43 @@ public class Vehiculo implements Serializable {
         return precioHora;
     }
 
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setTipoCarnet(String tipoCarnet) {
+        this.tipoCarnet = tipoCarnet;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setFechaAdq(String fechaAdq) {
+        this.fechaAdq = fechaAdq;
+    }
+
+    public void setBateria(int bateria) {
+        this.bateria = bateria;
+    }
+
+    public void setPrecioHora(double precioHora) {
+        this.precioHora = precioHora;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.taserfan.API;
 
 
 import com.example.taserfan.activities.preferencias.GestionPreferencias;
+import com.example.taserfan.objects.Vehiculo;
 
 import java.io.IOException;
 

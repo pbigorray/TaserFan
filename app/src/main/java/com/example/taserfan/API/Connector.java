@@ -119,5 +119,18 @@ public class Connector {
         }
         return null;
     }
+    public <T> Result<T> deleteVehiculo(Class<T> clazz, String path) {
+        try {
+            Response<ResponseBody> jsonResponse = callMethodsObject.deleteResult(path);
+            if (jsonResponse != null && jsonResponse.code() == 200)
+                return conversor.fromJSonToSuccess(jsonResponse.body().string(), clazz);
+            else if (jsonResponse != null) {
+                return conversor.getError(jsonResponse.errorBody().string());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

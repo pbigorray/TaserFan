@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
@@ -31,6 +30,7 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
     MyRecyclerViewAdapter myRecyclerViewAdapter;
     Button todos,coche,moto,bici,patinete;
     Tipo tipo;
+    private String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,36 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                vehiculos.remove(viewHolder.getAdapterPosition());
-                myRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                Vehiculo v=    auxList.get(viewHolder.getAdapterPosition());
+                switch (v.getTipo()) {
+                    case MOTO:
+                        url+=API.Routes.MOTO;
+                        break;
+                    case COCHE:
+                        url+=API.Routes.COCHE;
+                        break;
+                    case PATINETE:
+                        url+=API.Routes.PATINETE;
+                        break;
+                    case BICICLETA:
+                        url+=API.Routes.BICI;
+                        break;
+
+                }
+                executeCall(new CallInterface() {
+                    @Override
+                    public void doInBackground() {
+                        Connector.getConector().deleteVehiculo(Vehiculo.class,(url+"?matricula="+v.getMatricula()));
+                    }
+
+                    @Override
+                    public void doInUI() {
+                        vehiculos.remove(viewHolder.getAdapterPosition());
+                        myRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    }
+                });
+
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(sck);
@@ -88,12 +116,10 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
 
        // vehiculos = Connector.getConector().getAsList(Vehiculo.class,url);
 
-        String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this);
-
-        vehiculos = Connector.getConector().getAsList(Vehiculo.class, url+ API.Routes.VEHICULOS);
 
         if (tipo==null){
-
+            vehiculos = Connector.getConector().getAsList(Vehiculo.class, url+ API.Routes.VEHICULOS);
+            auxList=vehiculos;
         }else if(tipo==Tipo.MOTO){
             auxList=vehiculos.stream().filter(vehiculo -> vehiculo.getTipo()==Tipo.MOTO).collect(Collectors.toList());
         }else if(tipo==Tipo.COCHE){
@@ -112,20 +138,21 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
 
     @Override
     public void doInUI() {
-        if (tipo ==null) {
-            myRecyclerViewAdapter.setNewData(vehiculos);
-        }else {
-            myRecyclerViewAdapter.setNewData(auxList);
-        }
+        myRecyclerViewAdapter.setNewData(auxList);
+
     }
 
     @Override
     public void onClick(View view) {
-//        Intent intent =new Intent(getApplicationContext(),SecundaryActivity.class);
-//        int position=recyclerView.getChildAdapterPosition(view);
-//        intent.putExtra("position",position);
-//
-//        startActivity(intent);
+        Intent intent =new Intent(getApplicationContext(),SecundaryActivity.class);
+        int position=recyclerView.getChildAdapterPosition(view);
+        intent.putExtra("position",position);
+        intent.putExtra("tipo",auxList.get(position).getTipo());
+        intent.putExtra("matricula",auxList.get(recyclerView.getChildAdapterPosition(view)).getMatricula());
+        intent.putExtra("color",auxList.get(recyclerView.getChildAdapterPosition(view)).getColor());
+
+
+        startActivity(intent);
     }
 
 

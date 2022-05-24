@@ -6,4 +6,159 @@
     android:layout_height="match_parent"
     tools:context=".activities.SecundaryActivity">
 
+    <TextView
+        android:id="@+id/descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="descripcion"
+        app:layout_constraintEnd_toEndOf="@+id/iconVe"
+        app:layout_constraintStart_toStartOf="@+id/iconVe"
+        app:layout_constraintTop_toBottomOf="@+id/iconVe" />
+
+    <TextView
+        android:id="@+id/modelo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="modelo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toEndOf="@+id/iconVe"
+        app:layout_constraintTop_toTopOf="@+id/iconVe" />
+
+    <TextView
+        android:id="@+id/matricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="matricula"
+        app:layout_constraintBottom_toBottomOf="@+id/iconVe"
+        app:layout_constraintStart_toEndOf="@+id/iconVe"
+        app:layout_constraintTop_toBottomOf="@+id/modelo" />
+
+    <TextView
+        android:id="@+id/bateria"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginTop="32dp"
+        android:text="bateria"
+        app:layout_constraintEnd_toEndOf="@+id/descripcion"
+        app:layout_constraintStart_toStartOf="@+id/descripcion"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+
+    <TextView
+        android:id="@+id/precioHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="precioHora"
+        app:layout_constraintEnd_toEndOf="@+id/bateria"
+        app:layout_constraintStart_toStartOf="@+id/bateria"
+        app:layout_constraintTop_toBottomOf="@+id/bateria" />
+
+    <ImageView
+        android:id="@+id/iconVe"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fecha"
+        app:layout_constraintStart_toEndOf="@+id/matricula"
+        app:layout_constraintTop_toTopOf="@+id/descripcion" />
+
+    <TextView
+        android:id="@+id/estado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="estado"
+        app:layout_constraintEnd_toEndOf="@+id/fecha"
+        app:layout_constraintStart_toStartOf="@+id/fecha"
+        app:layout_constraintTop_toTopOf="@+id/bateria" />
+
+    <TextView
+        android:id="@+id/numplazas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Plazas"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/precioHora"
+        app:layout_constraintStart_toStartOf="@+id/precioHora"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
+
+    <TextView
+        android:id="@+id/numpuertas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Puertas"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/estado"
+        app:layout_constraintStart_toStartOf="@+id/estado"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
+
+    <TextView
+        android:id="@+id/cilindrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="cilindrada"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/precioHora"
+        app:layout_constraintStart_toStartOf="@+id/precioHora"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
+
+    <TextView
+        android:id="@+id/velocidadMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="velocidadMax"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/estado"
+        app:layout_constraintStart_toStartOf="@+id/estado"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
+
+    <TextView
+        android:id="@+id/tipoBici"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="tipo"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/precioHora"
+        app:layout_constraintStart_toStartOf="@+id/precioHora"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
+
+    <TextView
+        android:id="@+id/numruedas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="numruedas"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/precioHora"
+        app:layout_constraintStart_toStartOf="@+id/precioHora"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
+
+    <TextView
+        android:id="@+id/tamaño"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="tamaño"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/estado"
+        app:layout_constraintStart_toStartOf="@+id/estado"
+        app:layout_constraintTop_toBottomOf="@+id/precioHora" />
 </androidx.constraintlayout.widget.ConstraintLayout>
