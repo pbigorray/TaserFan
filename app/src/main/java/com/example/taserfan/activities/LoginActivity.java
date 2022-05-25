@@ -67,7 +67,6 @@ public class LoginActivity extends BaseActivity implements CallInterface {
         if (result instanceof Result.Success){
             LoggedInUserRepository.getInstance().login(((Result.Success<Empleado>)result).getData());
             Intent intent = new Intent(getApplicationContext(),VehiculoView.class);
-            Toast.makeText(this, "vamossss", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }else{
             Result.Error error =(Result.Error)result;

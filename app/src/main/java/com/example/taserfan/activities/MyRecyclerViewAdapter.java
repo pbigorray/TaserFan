@@ -97,7 +97,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
         holder.matricula.setText(vehiculos.get(position).getMatricula());
         holder.marca.setText(vehiculos.get(position).getMarca());
-        holder.color.setText(vehiculos.get(position).getColor());
         holder.estado.setText(vehiculos.get(position).getEstado());
 //
 //        Date date= new Date((long) l.dt*1000);
@@ -127,7 +126,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
        ImageView icon;
        TextView matricula;
        TextView marca;
-       TextView color;
        TextView estado;
 
         public ViewHolder(@NonNull View itemView) {
@@ -135,7 +133,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             icon=itemView.findViewById(R.id.icon);
             matricula=itemView.findViewById(R.id.matricula);
             marca=itemView.findViewById(R.id.marca);
-            color=itemView.findViewById(R.id.color);
             estado=itemView.findViewById(R.id.estado);
 
         }

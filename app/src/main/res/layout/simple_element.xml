@@ -76,13 +76,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
-    <TextView
-        android:id="@+id/color"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="descrip"
-        android:theme="@style/Theme.TaserFan"
-        app:layout_constraintEnd_toEndOf="@+id/estado"
-        app:layout_constraintStart_toStartOf="@+id/estado"
-        app:layout_constraintTop_toTopOf="@+id/matricula" />
 </androidx.constraintlayout.widget.ConstraintLayout>

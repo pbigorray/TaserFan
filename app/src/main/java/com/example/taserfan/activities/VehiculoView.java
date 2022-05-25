@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
@@ -28,7 +31,8 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
     RecyclerView recyclerView;
     List<Vehiculo> vehiculos,auxList;
     MyRecyclerViewAdapter myRecyclerViewAdapter;
-    Button todos,coche,moto,bici,patinete;
+    Button todos,coche,moto,bici,patinete,añadir;
+    EditText busqueda;
     Tipo tipo;
     private String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this);
 
@@ -37,7 +41,7 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehiculo_view);
         recyclerView= findViewById(R.id.recicle);
-
+        añadir=findViewById(R.id.add);
         vehiculos=new ArrayList<Vehiculo>();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, RecyclerView.VERTICAL);
@@ -57,6 +61,16 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
         moto=findViewById(R.id.moto);
         bici=findViewById(R.id.bici);
         patinete=findViewById(R.id.patinete);
+        busqueda=findViewById(R.id.busqueda);
+
+        añadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getApplicationContext(),AddVehiculo.class);
+
+                startActivity(intent);
+            }
+        });
 
 
         ItemTouchHelper.SimpleCallback sck = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -68,7 +82,7 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                Vehiculo v=    auxList.get(viewHolder.getAdapterPosition());
+                Vehiculo v=  auxList.get(viewHolder.getAdapterPosition());
                 switch (v.getTipo()) {
                     case MOTO:
                         url+=API.Routes.MOTO;
@@ -116,30 +130,13 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
 
        // vehiculos = Connector.getConector().getAsList(Vehiculo.class,url);
 
-
-        if (tipo==null){
-            vehiculos = Connector.getConector().getAsList(Vehiculo.class, url+ API.Routes.VEHICULOS);
-            auxList=vehiculos;
-        }else if(tipo==Tipo.MOTO){
-            auxList=vehiculos.stream().filter(vehiculo -> vehiculo.getTipo()==Tipo.MOTO).collect(Collectors.toList());
-        }else if(tipo==Tipo.COCHE){
-            auxList=vehiculos.stream().filter(vehiculo -> vehiculo.getTipo()==Tipo.COCHE).collect(Collectors.toList());
-
-        }else if (tipo==Tipo.BICICLETA){
-            auxList=vehiculos.stream().filter(vehiculo -> vehiculo.getTipo()==Tipo.BICICLETA).collect(Collectors.toList());
-
-        }else if (tipo==Tipo.PATINETE){
-            auxList=vehiculos.stream().filter(vehiculo -> vehiculo.getTipo()==Tipo.PATINETE).collect(Collectors.toList());
-
-        }
-
-
+        vehiculos = Connector.getConector().getAsList(Vehiculo.class, url+ API.Routes.VEHICULOS);
+        auxList=vehiculos;
     }
 
     @Override
     public void doInUI() {
         myRecyclerViewAdapter.setNewData(auxList);
-
     }
 
     @Override
@@ -149,8 +146,6 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
         intent.putExtra("position",position);
         intent.putExtra("tipo",auxList.get(position).getTipo());
         intent.putExtra("matricula",auxList.get(recyclerView.getChildAdapterPosition(view)).getMatricula());
-        intent.putExtra("color",auxList.get(recyclerView.getChildAdapterPosition(view)).getColor());
-
 
         startActivity(intent);
     }
@@ -158,32 +153,62 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
 
 
     public void onRadioButtonClicked(View view) {
-
         switch (view.getId()) {
             case R.id.vehiculos:
                 tipo=null;
-                executeCall(this);
+                buscar();
                 break;
             case R.id.moto:
                 tipo=Tipo.MOTO;
-                executeCall(this);
+                buscar();
 
                  break;
             case R.id.coche:
                 tipo=Tipo.COCHE;
-                executeCall(this);
+                buscar();
 
                 break;
             case R.id.bici:
                 tipo=Tipo.BICICLETA;
-                executeCall(this);
+                buscar();
 
                 break;
             case R.id.patinete:
                 tipo=Tipo.PATINETE;
-                executeCall(this);
-
+                buscar();
                 break;
         }
+    }
+
+    public void buscar(){
+        if (tipo==null){
+            auxList=vehiculos;
+        }else {
+            auxList = vehiculos.stream().filter(vehiculo -> vehiculo.getTipo() == tipo).collect(Collectors.toList());
+        }
+
+        busqueda.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (tipo==null){
+                    auxList=vehiculos;
+                }else{
+                    auxList=vehiculos.stream().filter(vehiculo -> vehiculo.getTipo()==tipo).collect(Collectors.toList());
+                }
+                auxList=auxList.stream().filter(vehiculo -> vehiculo.getMatricula().contains(editable.toString())).collect(Collectors.toList());
+                myRecyclerViewAdapter.setNewData(auxList);
+            }
+        });
+        myRecyclerViewAdapter.setNewData(auxList);
     }
 }

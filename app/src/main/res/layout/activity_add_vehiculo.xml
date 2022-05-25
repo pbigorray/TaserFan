@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SecundaryActivity">
+    tools:context=".activities.AddVehiculo">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="406dp"
         android:layout_height="486dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -166,14 +166,25 @@
         </LinearLayout>
     </ScrollView>
 
+    <Spinner
+        android:id="@+id/spinnerTipo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/update"
+        android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="Actualizar"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        android:text="Añadir"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerTipo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinnerTipo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
