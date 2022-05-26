@@ -1,9 +1,12 @@
 package com.example.taserfan.activities;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.taserfan.API.API;
@@ -14,20 +17,29 @@ import com.example.taserfan.activities.preferencias.GestionPreferencias;
 import com.example.taserfan.base.BaseActivity;
 import com.example.taserfan.base.CallInterface;
 import com.example.taserfan.objects.Bicicleta;
+import com.example.taserfan.objects.Carnet;
 import com.example.taserfan.objects.Coche;
+import com.example.taserfan.objects.Color;
+import com.example.taserfan.objects.Estado;
 import com.example.taserfan.objects.Moto;
 import com.example.taserfan.objects.Patinete;
 import com.example.taserfan.objects.Tipo;
+import com.example.taserfan.objects.TipoBici;
+
+import java.util.ArrayList;
 
 public class SecundaryActivity extends BaseActivity implements CallInterface {
 
-    private EditText modelo,matricula,precioHora,descripcion,carnet,color,bateria,estado,fecha,numplazas,numpuertas,cilindrada,velocidadMax,numRuedas,tamanyo,tipoBici;
+    private EditText modelo,matricula,precioHora,descripcion,bateria,fecha,numplazas,numpuertas,cilindrada,velocidadMax,numRuedas,tamanyo;
     Moto moto;
     Tipo tipo;
     Coche coche;
     Bicicleta bici;
     Patinete patinete;
     String matri;
+    Spinner spinnerCarnet,spinnerEstado,spinnerColor,spinnerTipoBici;
+    ArrayList colores,carnets,estados,tiposBici;
+    ArrayAdapter adapterColor,adapterCarnets,adapterEstado,adapterTipoBici;
     Button update;
     Result result;
     private String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this);
@@ -46,10 +58,9 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         precioHora=findViewById(R.id.precioHora);
         descripcion=findViewById(R.id.descripcion);
         bateria=findViewById(R.id.bateria);
-        estado=findViewById(R.id.estado);
         fecha=findViewById(R.id.fecha);
-        carnet=findViewById(R.id.carnet);
-        color=findViewById(R.id.color);
+
+
 
         numplazas=findViewById(R.id.numplazas);
         numpuertas=findViewById(R.id.numPuertas);
@@ -60,7 +71,13 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         numRuedas=findViewById(R.id.numRuedas);
         tamanyo=findViewById(R.id.tamanyo);
 
-        tipoBici=findViewById(R.id.tipoBici);
+        spinnerCarnet=findViewById(R.id.spinnerCarnet);
+
+
+
+        spinnerEstado=findViewById(R.id.spinnerEstado);
+        spinnerColor=findViewById(R.id.spinnerColor);
+        spinnerTipoBici=findViewById(R.id.spinnerTipoBici);
 
         update =findViewById(R.id.update);
 
@@ -101,9 +118,7 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 descripcion.setText(""+moto.getDescripcion());
                 fecha.setText(""+moto.getFechaAdq());
                 bateria.setText(""+moto.getBateria());
-                estado.setText(""+moto.getEstado());
-                carnet.setText(""+moto.getTipoCarnet());
-                color.setText(""+moto.getColor());
+
                 break;
             case COCHE:
                 matricula.setText(""+coche.getMatricula());
@@ -112,9 +127,7 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 descripcion.setText(""+coche.getDescripcion());
                 fecha.setText(""+coche.getFechaAdq());
                 bateria.setText(""+coche.getBateria());
-                estado.setText(""+coche.getEstado());
-                carnet.setText(""+coche.getTipoCarnet());
-                color.setText(""+coche.getColor());
+
                 break;
             case PATINETE:
                 matricula.setText(""+patinete.getMatricula());
@@ -123,9 +136,7 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 descripcion.setText(""+patinete.getDescripcion());
                 fecha.setText(""+patinete.getFechaAdq());
                 bateria.setText(""+patinete.getBateria());
-                estado.setText(""+patinete.getEstado());
-                carnet.setText(""+patinete.getTipoCarnet());
-                color.setText(""+patinete.getColor());
+
                 break;
             case BICICLETA:
                 matricula.setText(""+bici.getMatricula());
@@ -134,9 +145,7 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 descripcion.setText(""+bici.getDescripcion());
                 fecha.setText(""+bici.getFechaAdq());
                 bateria.setText(""+bici.getBateria());
-                estado.setText(""+bici.getEstado());
-                carnet.setText(""+bici.getTipoCarnet());
-                color.setText(""+bici.getColor());
+
                 break;
         }
         switch (tipo){
@@ -153,12 +162,14 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 numpuertas.setVisibility(View.GONE);
                 numRuedas.setVisibility(View.GONE);
                 tamanyo.setVisibility(View.GONE);
-                tipoBici.setVisibility(View.GONE);
                 numplazas.setEnabled(false);
                 numpuertas.setEnabled(false);
                 numRuedas.setEnabled(false);
                 tamanyo.setEnabled(false);
-                tipoBici.setEnabled(false);
+
+
+                spinnerTipoBici.setVisibility(View.GONE);
+                spinnerTipoBici.setEnabled(false);
 
                 break;
             case COCHE:
@@ -172,21 +183,20 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
 
                 numRuedas.setVisibility(View.GONE);
                 tamanyo.setVisibility(View.GONE);
-                tipoBici.setVisibility(View.GONE);
                 numRuedas.setEnabled(false);
                 tamanyo.setEnabled(false);
-                tipoBici.setEnabled(false);
-
                 cilindrada.setVisibility(View.GONE);
                 velocidadMax.setVisibility(View.GONE);
                 cilindrada.setEnabled(false);
                 velocidadMax.setEnabled(false);
+
+                spinnerTipoBici.setVisibility(View.GONE);
+                spinnerTipoBici.setEnabled(false);
+
                 break;
             case BICICLETA:
-                tipoBici.setVisibility(View.VISIBLE);
-                tipoBici.setEnabled(true);
-
-                tipoBici.setText(""+bici.getTipoBici());
+                spinnerTipoBici.setVisibility(View.VISIBLE);
+                spinnerTipoBici.setEnabled(true);
 
                 numplazas.setVisibility(View.GONE);
                 numpuertas.setVisibility(View.GONE);
@@ -211,10 +221,10 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 tamanyo.setText(""+patinete.getTamanyo());
                 numplazas.setVisibility(View.GONE);
                 numpuertas.setVisibility(View.GONE);
-                tipoBici.setVisibility(View.GONE);
                 numplazas.setEnabled(false);
                 numpuertas.setEnabled(false);
-                tipoBici.setEnabled(false);
+                spinnerTipoBici.setVisibility(View.GONE);
+                spinnerTipoBici.setEnabled(false);
 
                 cilindrada.setVisibility(View.GONE);
                 velocidadMax.setVisibility(View.GONE);
@@ -222,7 +232,9 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 velocidadMax.setEnabled(false);
 
                 break;
+
         }
+        crearSpiners();
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,21 +242,25 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 executeCall(new CallInterface() {
                     @Override
                     public void doInBackground() {
+                        Carnet carnet=(Carnet) spinnerCarnet.getSelectedItem();
+                        Color color=(Color)spinnerColor.getSelectedItem();
+                        Estado estado=(Estado) spinnerEstado.getSelectedItem();
                         switch (tipo){
                             case MOTO:
-                                Moto auxM=new Moto(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getText().toString(),color.getText().toString(),estado.getText().toString(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(velocidadMax.getText().toString()),Integer.valueOf(cilindrada.getText().toString()));
+                                Moto auxM=new Moto(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(velocidadMax.getText().toString()),Integer.valueOf(cilindrada.getText().toString()));
                                 result= Connector.getConector().put(Moto.class,auxM, url+API.Routes.MOTO);
                                 break;
                             case COCHE:
-                                Coche auxC=new Coche(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getText().toString(),color.getText().toString(),estado.getText().toString(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(numplazas.getText().toString()),Integer.valueOf(numpuertas.getText().toString()));
+                                Coche auxC=new Coche(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(numplazas.getText().toString()),Integer.valueOf(numpuertas.getText().toString()));
                                 result= Connector.getConector().put(Coche.class,auxC, url+API.Routes.COCHE);
                                 break;
                             case BICICLETA:
-                                Bicicleta auxB=new Bicicleta(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getText().toString(),color.getText().toString(),estado.getText().toString(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,tipoBici.getText().toString());
+                                TipoBici tipoBici=(TipoBici) spinnerTipoBici.getSelectedItem();
+                                Bicicleta auxB=new Bicicleta(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,tipoBici.getStr());
                                 result= Connector.getConector().put(Bicicleta.class,auxB, url+API.Routes.BICI);
                                 break;
                             case PATINETE:
-                                Patinete auxP=new Patinete(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getText().toString(),color.getText().toString(),estado.getText().toString(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(numRuedas.getText().toString()),Integer.valueOf(tamanyo.getText().toString()));
+                                Patinete auxP=new Patinete(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(numRuedas.getText().toString()),Integer.valueOf(tamanyo.getText().toString()));
                                 result= Connector.getConector().put(Patinete.class,auxP, url+API.Routes.PATINETE);
                                 break;
                         }
@@ -256,6 +272,9 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                             Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
                         }else{
                             Result.Error error =(Result.Error)result;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                            builder.setMessage(error.getError()).setTitle("Error Update");
+                            AlertDialog alertDialog=builder.create();
                             Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -264,5 +283,74 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         });
 
 
+    }
+    private void crearSpiners() {
+
+
+        carnets=new ArrayList();
+        adapterCarnets = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, carnets);
+        spinnerCarnet.setAdapter(adapterCarnets);
+
+        switch (tipo){
+            case MOTO:
+                carnets.add(Carnet.AM);
+                carnets.add(Carnet.A);
+                break;
+            case COCHE:
+                carnets.add(Carnet.B);
+                break;
+            default:
+                carnets.add(Carnet.NO);
+                break;
+        }
+        adapterCarnets.notifyDataSetChanged();
+
+        colores=new ArrayList();
+        adapterColor = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, colores);
+        spinnerColor.setAdapter(adapterColor);
+        switch (tipo){
+            case MOTO:
+                colores.add(Color.VERDE);
+                colores.add(Color.AZUL);
+                colores.add(Color.BLANCO);
+                colores.add(Color.NEGRO);
+                break;
+            case COCHE:
+                colores.add(Color.VERDE);
+                colores.add(Color.ROJO);
+                colores.add(Color.AMARILLO);
+                colores.add(Color.AZUL);
+                colores.add(Color.BLANCO);
+                break;
+            default:
+                colores.add(Color.VERDE);
+                colores.add(Color.ROJO);
+                colores.add(Color.AMARILLO);
+                colores.add(Color.AZUL);
+                colores.add(Color.BLANCO);
+                colores.add(Color.NEGRO);
+                break;
+
+        }
+        adapterColor.notifyDataSetChanged();
+
+        estados=new ArrayList();
+        estados.add(Estado.PREPARADO);
+        estados.add(Estado.ALQUILADO);
+        estados.add(Estado.BAJA);
+        estados.add(Estado.RESERVADO);
+        adapterEstado=new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, estados);
+        spinnerEstado.setAdapter(adapterEstado);
+
+        switch (tipo) {
+            case BICICLETA:
+                tiposBici=new ArrayList();
+                tiposBici.add(TipoBici.PASEO);
+                tiposBici.add(TipoBici.HIBRIDA);
+                tiposBici.add(TipoBici.MOTANA);
+                adapterTipoBici=new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, tiposBici);
+                spinnerTipoBici.setAdapter(adapterTipoBici);
+                break;
+        }
     }
 }

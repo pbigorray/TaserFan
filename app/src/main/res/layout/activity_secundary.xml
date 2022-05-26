@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="Matricula"
                 android:inputType="textPersonName" />
 
@@ -53,29 +54,20 @@
                 android:hint="Bateria"
                 android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/carnet"
+            <Spinner
+                android:id="@+id/spinnerCarnet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Carnet"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/color"
+            <Spinner
+                android:id="@+id/spinnerColor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Color"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/estado"
+            <Spinner
+                android:id="@+id/spinnerEstado"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Estado"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/fecha"
@@ -133,14 +125,10 @@
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/tipoBici"
+            <Spinner
+                android:id="@+id/spinnerTipoBici"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:hint="Tipo de la bici"
-                android:inputType="textPersonName"
                 android:visibility="gone" />
 
             <EditText

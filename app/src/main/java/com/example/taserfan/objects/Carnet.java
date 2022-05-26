@@ -1,9 +1,9 @@
 package com.example.taserfan.objects;
 
-public enum Color {
-    VERDE("verde"),NEGRO("negro"),BLANCO("blanco"),ROJO("rojo"),AZUL("azul"),AMARILLO("amarillo");
+public enum Carnet {
+    NO("NO"),AM("AM"),A("A"),B("B"),C("C"),D("D"),E("E"),Z("Z");
     private String str;
-    Color(String str){
+    Carnet(String str){
         this.str=str;
     }
 
@@ -11,4 +11,3 @@ public enum Color {
         return str;
     }
 }
-
