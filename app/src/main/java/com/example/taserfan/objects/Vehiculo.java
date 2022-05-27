@@ -9,6 +9,22 @@ public class Vehiculo implements Serializable {
     private String  fechaAdq;
     private int bateria;
     private double precioHora;
+
+    @Override
+    public String toString() {
+        return
+                "\nmatricula='" + matricula + '\'' +
+                "\nmarca='" + marca + '\'' +
+                "\ndescripcion='" + descripcion + '\'' +
+                "\ntipoCarnet='" + tipoCarnet + '\'' +
+                "\ncolor='" + color + '\'' +
+                "\nestado='" + estado + '\'' +
+                "\nfechaAdq='" + fechaAdq + '\'' +
+                "\nbateria=" + bateria +
+                "\nprecioHora=" + precioHora +
+                "\ntipo=" + tipo;
+    }
+
     private Tipo tipo;
 
     public Vehiculo(String matricula, String marca, String descripcion, int bateria, String tipoCarnet, String color, String estado, String fechaAdq, double precioHora, Tipo tipo) {

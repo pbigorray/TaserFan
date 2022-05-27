@@ -16,6 +16,13 @@ public class Patinete extends Vehiculo {
         super(matricula, marca, color, estado,tipo);
     }
 
+    @Override
+    public String toString() {
+        return "Patinete" +super.toString()+
+                "\nnumRuedas=" + numRuedas +
+                "\ntamanyo=" + tamanyo ;
+    }
+
     public int getNumRuedas() {
         return numRuedas;
     }

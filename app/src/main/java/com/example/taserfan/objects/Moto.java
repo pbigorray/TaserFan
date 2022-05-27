@@ -16,6 +16,14 @@ public class Moto extends Vehiculo{
         this.cilindrada = cilindrada;
     }
 
+
+    @Override
+    public String toString() {
+        return "Moto" +super.toString()+
+                "\nvelocidadMax=" + velocidadMax +
+                "\ncilindrada=" + cilindrada ;
+    }
+
     public int getVelocidadMax() {
         return velocidadMax;
     }

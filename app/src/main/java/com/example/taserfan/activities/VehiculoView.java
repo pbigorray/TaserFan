@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,9 +14,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.taserfan.API.API;
 import com.example.taserfan.API.Connector;
+import com.example.taserfan.API.Result;
 import com.example.taserfan.R;
 import com.example.taserfan.activities.preferencias.GestionPreferencias;
 import com.example.taserfan.base.BaseActivity;
@@ -34,6 +37,7 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
     Button todos,coche,moto,bici,patinete,añadir;
     EditText busqueda;
     Tipo tipo;
+    Result result;
     private String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this);
 
     @Override
@@ -83,29 +87,42 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 Vehiculo v=  auxList.get(viewHolder.getAdapterPosition());
+                String auxUrl="";
                 switch (v.getTipo()) {
                     case MOTO:
-                        url+=API.Routes.MOTO;
+                        auxUrl=url+API.Routes.MOTO;
                         break;
                     case COCHE:
-                        url+=API.Routes.COCHE;
+                        auxUrl=url+API.Routes.COCHE;
                         break;
                     case PATINETE:
-                        url+=API.Routes.PATINETE;
+                        auxUrl=url+API.Routes.PATINETE;
                         break;
                     case BICICLETA:
-                        url+=API.Routes.BICI;
+                        auxUrl=url+API.Routes.BICI;
                         break;
 
                 }
+                String finalAuxUrl = auxUrl;
                 executeCall(new CallInterface() {
                     @Override
                     public void doInBackground() {
-                        Connector.getConector().deleteVehiculo(Vehiculo.class,(url+"?matricula="+v.getMatricula()));
+                            result=Connector.getConector().deleteVehiculo(Vehiculo.class,(finalAuxUrl +"?matricula="+v.getMatricula()));
                     }
 
                     @Override
                     public void doInUI() {
+                        if (result instanceof Result.Success){
+                            Toast.makeText(getApplicationContext(), "Eliminado correctamente", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Result.Error error=(Result.Error)result;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VehiculoView.this);
+                            builder.setMessage("Error code: "+error.getCode()+"\n"+"Error message: "+error.getError())
+                                    .setTitle("Error Delete")
+                                    .setPositiveButton("Oki",null);
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
                         vehiculos.remove(viewHolder.getAdapterPosition());
                         myRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }
@@ -115,12 +132,12 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(sck);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        executeCall(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        executeCall(this);
     }
 
     @Override

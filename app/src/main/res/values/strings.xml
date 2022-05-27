@@ -23,6 +23,6 @@
     <string name="ip_default">http://10.11.0.191</string>
     <string name="puerto">Puerto</string>
     <string name="puerto_default">4567</string>
-
+    <string name="oki">Ok</string>
 
 </resources>

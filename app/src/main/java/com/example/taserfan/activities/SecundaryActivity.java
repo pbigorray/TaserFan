@@ -252,34 +252,40 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                     Double.parseDouble(precioHora.getText().toString());
                 }catch (NumberFormatException nfe){
                     builder.setMessage("El campo del precio no es un numero")
-                            .setTitle("Falta informacion");
+                            .setTitle("Falta informacion")
+                            .setPositiveButton("Oki",null);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }
 
                 if (mod.equals("")) {
                     builder.setMessage("El campo del modelo esta vacio")
-                            .setTitle("Falta informacion");
+                            .setTitle("Falta informacion")
+                            .setPositiveButton("Oki",null);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 } else if (bateria.getText().toString().equals("")) {
                     builder.setMessage("El campo de la bateria esta vacio")
-                            .setTitle("Falta informacion");
+                            .setTitle("Falta informacion")
+                            .setPositiveButton("Oki",null);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }else if(!bateria.getText().toString().matches("[0-9]+")){
                     builder.setMessage("El campo de la bateria no es un numero entero")
-                            .setTitle("Falta informacion");
+                            .setTitle("Falta informacion")
+                            .setPositiveButton("Oki",null);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }else if (fec.equals("")) {
                     builder.setMessage("El campo de la fecha esta vacio")
-                            .setTitle("Falta informacion");
+                            .setTitle("Falta informacion")
+                            .setPositiveButton("Oki",null);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 } else if (precioHora.getText().toString().equals("")) {
                     builder.setMessage("El campo del precio es incorrecto")
-                            .setTitle("Falta informacion");
+                            .setTitle("Falta informacion")
+                            .setPositiveButton("Oki",null);
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 } else {
@@ -287,41 +293,57 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                         case MOTO:
                             if (velocidadMax.getText().toString().equals("")) {
                                 builder.setMessage("El campo de velocidad Maxima esta vacio")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             } else if (!velocidadMax.getText().toString().matches("[0-9]+")) {
                                 builder.setMessage("El campo de velocidad Maxima no es un numero entero")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             } else if (cilindrada.getText().toString().equals("")) {
                                     builder.setMessage("El campo de cilindarda esta vacio")
-                                            .setTitle("Falta informacion");
+                                            .setTitle("Falta informacion")
+                                            .setPositiveButton("Oki",null);
                                     AlertDialog alertDialog = builder.create();
                                     alertDialog.show();
                             }else if(!cilindrada.getText().toString().matches("[0-9]+")){
                                 builder.setMessage("El campo de cilindarda no es un numero entero")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             }else {
                                 executeCall(new CallInterface() {
+                                    Moto auxM;
                                     @Override
                                     public void doInBackground() {
-                                        Moto auxM = new Moto(matri, mod, descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fec, Double.parseDouble(precioHora.getText().toString()), tipo, Integer.parseInt(velocidadMax.getText().toString()), Integer.parseInt(cilindrada.getText().toString()));
+                                        auxM = new Moto(matri, mod, descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fec, Double.parseDouble(precioHora.getText().toString()), tipo, Integer.parseInt(velocidadMax.getText().toString()), Integer.parseInt(cilindrada.getText().toString()));
                                         result = Connector.getConector().put(Moto.class, auxM, url + API.Routes.MOTO);
                                     }
 
                                     @Override
                                     public void doInUI() {
                                         if (result instanceof Result.Success) {
-                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage("Se ha actualizado correctamente: "+auxM)
+                                                    .setTitle("Actualizado")
+                                                    .setPositiveButton("Oki", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            finish();
+                                                        }
+                                                    });
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
                                         } else {
                                             Result.Error error = (Result.Error) result;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
-                                            builder.setMessage(error.getError())
-                                                    .setTitle("Error Update");
+                                            builder.setMessage("Error code: "+error.getCode()+"\n"+"Error message: "+error.getError())
+                                                    .setTitle("Error Update")
+                                                    .setPositiveButton("Oki",null);
                                             AlertDialog alertDialog = builder.create();
                                             alertDialog.show();
 //                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
@@ -333,41 +355,57 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                         case COCHE:
                             if (numplazas.getText().toString().equals("")) {
                                 builder.setMessage("El campo del numero de plazas esta vacio")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             } else if (!numplazas.getText().toString().matches("[0-9]+")) {
                                 builder.setMessage("El campo del numero de plazas no es un numero entero")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             } else if (numpuertas.getText().toString().equals("")) {
                                 builder.setMessage("El campo del numero de puertas esta vacio")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             }else if(!numpuertas.getText().toString().matches("[0-9]+")){
                                 builder.setMessage("El campo de cilindarda no es un numero entero")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             }else {
                                 executeCall(new CallInterface() {
+                                    Coche auxC;
                                     @Override
                                     public void doInBackground() {
-                                        Coche auxC = new Coche(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, Integer.valueOf(numplazas.getText().toString()), Integer.valueOf(numpuertas.getText().toString()));
+                                        auxC = new Coche(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, Integer.valueOf(numplazas.getText().toString()), Integer.valueOf(numpuertas.getText().toString()));
                                         result = Connector.getConector().put(Coche.class, auxC, url + API.Routes.COCHE);
                                     }
 
                                     @Override
                                     public void doInUI() {
                                         if (result instanceof Result.Success) {
-                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage("Se ha actualizado correctamente: "+auxC)
+                                                    .setTitle("Actualizado")
+                                                    .setPositiveButton("Oki", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            finish();
+                                                        }
+                                                    });
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
                                         } else {
                                             Result.Error error = (Result.Error) result;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
-                                            builder.setMessage(error.getError())
-                                                    .setTitle("Error Update");
+                                            builder.setMessage("Error code: "+error.getCode()+"\n"+"Error message: "+error.getError())
+                                                    .setTitle("Error Update")
+                                                    .setPositiveButton("Oki",null);
                                             AlertDialog alertDialog = builder.create();
                                             alertDialog.show();
 //                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
@@ -378,22 +416,34 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                             break;
                         case BICICLETA:
                                 executeCall(new CallInterface() {
+                                    Bicicleta auxB;
                                     @Override
                                     public void doInBackground() {
                                         TipoBici tipoBici = (TipoBici) spinnerTipoBici.getSelectedItem();
-                                        Bicicleta auxB = new Bicicleta(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, tipoBici.getStr());
+                                        auxB = new Bicicleta(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, tipoBici.getStr());
                                         result = Connector.getConector().put(Bicicleta.class, auxB, url + API.Routes.BICI);
                                     }
 
                                     @Override
                                     public void doInUI() {
                                         if (result instanceof Result.Success) {
-                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage("Se ha actualizado correctamente: "+auxB)
+                                                    .setTitle("Actualizado")
+                                                    .setPositiveButton("Oki", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            finish();
+                                                        }
+                                                    });
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
                                         } else {
                                             Result.Error error = (Result.Error) result;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
-                                            builder.setMessage(error.getError())
-                                                    .setTitle("Error Update");
+                                            builder.setMessage("Error code: "+error.getCode()+"\n"+"Error message: "+error.getError())
+                                                    .setTitle("Error Update")
+                                                    .setPositiveButton("Oki",null);
                                             AlertDialog alertDialog = builder.create();
                                             alertDialog.show();
 //                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
@@ -406,41 +456,57 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
 
                             if (numRuedas.getText().toString().equals("")) {
                                 builder.setMessage("El campo del numero de ruedas esta vacio")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             } else if (!numRuedas.getText().toString().matches("[0-9]+")) {
                                 builder.setMessage("El campo del numero de ruedas no es un numero entero")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             } else if (tamanyo.getText().toString().equals("")) {
                                 builder.setMessage("El campo del tamaño esta vacio")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             }else if(!tamanyo.getText().toString().matches("[0-9]+")){
                                 builder.setMessage("El campo del tamaño no es un numero entero")
-                                        .setTitle("Falta informacion");
+                                        .setTitle("Falta informacion")
+                                        .setPositiveButton("Oki",null);
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
                             }else {
                                 executeCall(new CallInterface() {
+                                    Patinete auxP;
                                     @Override
                                     public void doInBackground() {
-                                        Patinete auxP = new Patinete(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, Integer.parseInt(numRuedas.getText().toString()), Integer.parseInt(tamanyo.getText().toString()));
+                                        auxP = new Patinete(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, Integer.parseInt(numRuedas.getText().toString()), Integer.parseInt(tamanyo.getText().toString()));
                                         result = Connector.getConector().put(Patinete.class, auxP, url + API.Routes.PATINETE);
                                     }
 
                                     @Override
                                     public void doInUI() {
                                         if (result instanceof Result.Success) {
-                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage("Se ha actualizado correctamente: "+auxP)
+                                                    .setTitle("Actualizado")
+                                                    .setPositiveButton("Oki", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            finish();
+                                                        }
+                                                    });
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
                                         } else {
                                             Result.Error error = (Result.Error) result;
                                             AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
-                                            builder.setMessage(error.getError())
-                                                    .setTitle("Error Update");
+                                            builder.setMessage("Error code: "+error.getCode()+"\n"+"Error message: "+error.getError())
+                                                    .setTitle("Error Update")
+                                                    .setPositiveButton("Oki",null);
                                             AlertDialog alertDialog = builder.create();
                                             alertDialog.show();
 //                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();

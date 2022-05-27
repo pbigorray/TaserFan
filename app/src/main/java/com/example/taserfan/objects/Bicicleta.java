@@ -12,6 +12,11 @@ public class Bicicleta extends Vehiculo{
         this.tipoBici = tipoBici;
     }
 
+    @Override
+    public String toString() {
+        return "Bicicleta" +super.toString()+
+                "\ntipoBici='" + tipoBici ;
+    }
 
     public String getTipoBici() {
         return tipoBici;

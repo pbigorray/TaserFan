@@ -16,6 +16,13 @@ public class Coche extends Vehiculo{
         this.numPuertas = numPuertas;
     }
 
+    @Override
+    public String toString() {
+        return "Coche" +super.toString()+
+                "\nnumPlazas=" + numPlazas +
+                "\nnumPuertas=" + numPuertas;
+    }
+
     public int getNumPlazas() {
         return numPlazas;
     }

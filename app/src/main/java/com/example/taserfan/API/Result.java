@@ -22,7 +22,7 @@ public class Result<T> {
     }
 
     // Success sub-class
-    public final static class Success<T> extends Result {
+    public static class Success<T> extends Result {
         private T data;
 
         public Success() {
@@ -42,12 +42,14 @@ public class Result<T> {
     }
 
     // Error sub-class
-    public final static class Error extends Result {
+    public static class Error extends Result {
 
         private String error;
+        private int code;
 
-        public Error(String error) {
+        public Error(int code,String error) {
             this.error = error;
+            this.code = code;
         }
 
         public Error() {
@@ -59,6 +61,13 @@ public class Result<T> {
 
         public String getError() {
             return this.error;
+        }
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
         }
     }
 }
