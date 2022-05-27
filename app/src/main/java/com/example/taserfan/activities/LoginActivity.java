@@ -1,5 +1,6 @@
 package com.example.taserfan.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,8 +58,8 @@ public class LoginActivity extends BaseActivity implements CallInterface {
     public void doInBackground() {
         AuthenticationData auth=new AuthenticationData(user.getText().toString(),pass.getText().toString());
         String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this)+ API.Routes.AUTHENTICATE;
-//        result= Connector.getConector().post(Empleado.class,auth,url);
-        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
+        result= Connector.getConector().post(Empleado.class,auth,url);
+//        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
 
     }
 
@@ -70,7 +71,12 @@ public class LoginActivity extends BaseActivity implements CallInterface {
             startActivity(intent);
         }else{
             Result.Error error =(Result.Error)result;
-            Toast.makeText(this, error.getError(), Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setMessage("Error code: "+error.getCode()+"\n"+"Error message: "+error.getError())
+                    .setTitle("Error login")
+                    .setPositiveButton("Oki",null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
 
     }
