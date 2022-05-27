@@ -2,6 +2,7 @@ package com.example.taserfan.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -85,43 +86,220 @@ public class AddVehiculo extends BaseActivity implements AdapterView.OnItemSelec
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                executeCall(new CallInterface() {
-                    @Override
-                    public void doInBackground() {
-                        Tipo aux=(Tipo) spinner.getSelectedItem();
-                        Carnet carnet=(Carnet) spinnerCarnet.getSelectedItem();
-                        Color color=(Color)spinnerColor.getSelectedItem();
-                        Estado estado=(Estado) spinnerEstado.getSelectedItem();
-                        switch (aux){
-                            case MOTO:
-                                Moto auxM=new Moto(matricula.getText().toString(),modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),aux,Integer.valueOf(velocidadMax.getText().toString()),Integer.valueOf(cilindrada.getText().toString()));
-                                result= Connector.getConector().post(Moto.class,auxM, url+ API.Routes.MOTO);
-                                break;
-                            case COCHE:
-                                Coche auxC=new Coche(matricula.getText().toString(),modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),aux,Integer.valueOf(numPlazas.getText().toString()),Integer.valueOf(numPuertas.getText().toString()));
-                                result= Connector.getConector().post(Coche.class,auxC, url+API.Routes.COCHE);
-                                break;
-                            case BICICLETA:
-                                Bicicleta auxB=new Bicicleta(matricula.getText().toString(),modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),aux,spinnerTipoBici.getSelectedItem().toString());
-                                result= Connector.getConector().post(Bicicleta.class,auxB, url+API.Routes.BICI);
-                                break;
-                            case PATINETE:
-                                Patinete auxP=new Patinete(matricula.getText().toString(),modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),aux,Integer.valueOf(numRuedas.getText().toString()),Integer.valueOf(tamanyo.getText().toString()));
-                                result= Connector.getConector().post(Patinete.class,auxP, url+API.Routes.PATINETE);
-                                break;
-                        }
-                    }
+                Tipo aux = (Tipo) spinner.getSelectedItem();
+                Carnet carnet = (Carnet) spinnerCarnet.getSelectedItem();
+                Color color = (Color) spinnerColor.getSelectedItem();
+                Estado estado = (Estado) spinnerEstado.getSelectedItem();
 
-                    @Override
-                    public void doInUI() {
-                        if (result instanceof Result.Success){
-                            Toast.makeText(getApplicationContext(), "Insertado correctamente correctamente", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Result.Error error =(Result.Error)result;
-                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
-                        }
+                String mod, fec;
+                mod = modelo.getText().toString();
+                fec = fecha.getText().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddVehiculo.this);
+
+                try {
+                    Double.parseDouble(precioHora.getText().toString());
+                } catch (NumberFormatException nfe) {
+                    builder.setMessage("El campo del precio no es un numero")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+
+                if (mod.equals("")) {
+                    builder.setMessage("El campo del modelo esta vacio")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else if (bateria.getText().toString().equals("")) {
+                    builder.setMessage("El campo de la bateria es incorrecto")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else if (!bateria.getText().toString().matches("[0-9]+")) {
+                    builder.setMessage("El campo de la bateria no es un numero entero")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else if (fec.equals("")) {
+                    builder.setMessage("El campo de la fecha esta vacio")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else if (precioHora.getText().toString().equals("")) {
+                    builder.setMessage("El campo del precio es incorrecto")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    switch (aux) {
+                        case MOTO:
+                            if (velocidadMax.getText().toString().equals("")) {
+                                builder.setMessage("El campo de velocidad Maxima esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!velocidadMax.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo de velocidad Maxima no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (cilindrada.getText().toString().equals("")) {
+                                builder.setMessage("El campo de cilindarda esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!cilindrada.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo de cilindarda no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else {
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        Moto auxM = new Moto(matricula.getText().toString(), modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), aux, Integer.parseInt(velocidadMax.getText().toString()), Integer.parseInt(cilindrada.getText().toString()));
+                                        result = Connector.getConector().post(Moto.class, auxM, url + API.Routes.MOTO);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Añadido correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(AddVehiculo.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error Add");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                            break;
+                        case COCHE:
+                            if (numPlazas.getText().toString().equals("")) {
+                                builder.setMessage("El campo del numero de plazas esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!numPlazas.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo del numero de plazas no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (numPuertas.getText().toString().equals("")) {
+                                builder.setMessage("El campo del numero de puertas esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!numPuertas.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo de cilindarda no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else {
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        Coche auxC = new Coche(matricula.getText().toString(), modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), aux, Integer.parseInt(numPlazas.getText().toString()), Integer.parseInt(numPuertas.getText().toString()));
+                                        result = Connector.getConector().post(Coche.class, auxC, url + API.Routes.COCHE);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Añadido correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(AddVehiculo.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error add");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                            break;
+                        case BICICLETA:
+                            executeCall(new CallInterface() {
+                                @Override
+                                public void doInBackground() {
+                                    TipoBici tipoBici = (TipoBici) spinnerTipoBici.getSelectedItem();
+                                    Bicicleta auxB = new Bicicleta(matricula.getText().toString(), modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), aux, tipoBici.getStr());
+                                    result = Connector.getConector().post(Bicicleta.class, auxB, url + API.Routes.BICI);
+                                }
+
+                                @Override
+                                public void doInUI() {
+                                    if (result instanceof Result.Success) {
+                                        Toast.makeText(getApplicationContext(), "Añadido correctamente", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Result.Error error = (Result.Error) result;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(AddVehiculo.this);
+                                        builder.setMessage(error.getError())
+                                                .setTitle("Error Add");
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                            break;
+                        case PATINETE:
+
+                            if (numRuedas.getText().toString().equals("")) {
+                                builder.setMessage("El campo del numero de ruedas esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!numRuedas.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo del numero de ruedas no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (tamanyo.getText().toString().equals("")) {
+                                builder.setMessage("El campo del tamaño esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!tamanyo.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo del tamaño no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else {
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        Patinete auxP = new Patinete(matricula.getText().toString(), modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), aux, Integer.parseInt(numRuedas.getText().toString()), Integer.parseInt(tamanyo.getText().toString()));
+                                        result = Connector.getConector().post(Patinete.class, auxP, url + API.Routes.PATINETE);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Añadido correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(AddVehiculo.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error Add");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+
+                            break;
                     }
-                });
+                }
             }
         });
     }

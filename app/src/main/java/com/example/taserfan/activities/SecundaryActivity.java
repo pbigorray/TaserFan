@@ -1,6 +1,8 @@
 package com.example.taserfan.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,19 +32,19 @@ import java.util.ArrayList;
 
 public class SecundaryActivity extends BaseActivity implements CallInterface {
 
-    private EditText modelo,matricula,precioHora,descripcion,bateria,fecha,numplazas,numpuertas,cilindrada,velocidadMax,numRuedas,tamanyo;
+    private EditText modelo, matricula, precioHora, descripcion, bateria, fecha, numplazas, numpuertas, cilindrada, velocidadMax, numRuedas, tamanyo;
     Moto moto;
     Tipo tipo;
     Coche coche;
     Bicicleta bici;
     Patinete patinete;
     String matri;
-    Spinner spinnerCarnet,spinnerEstado,spinnerColor,spinnerTipoBici;
-    ArrayList colores,carnets,estados,tiposBici;
-    ArrayAdapter adapterColor,adapterCarnets,adapterEstado,adapterTipoBici;
+    Spinner spinnerCarnet, spinnerEstado, spinnerColor, spinnerTipoBici;
+    ArrayList colores, carnets, estados, tiposBici;
+    ArrayAdapter adapterColor, adapterCarnets, adapterEstado, adapterTipoBici;
     Button update;
     Result result;
-    private String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this);
+    private String url = GestionPreferencias.getInstance().getIp(this) + ":" + GestionPreferencias.getInstance().getPuerto(this);
 
 
     @Override
@@ -50,36 +52,34 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_secundary);
 
-        tipo=(Tipo) getIntent().getExtras().get("tipo");
-        matri=getIntent().getExtras().getString("matricula");
+        tipo = (Tipo) getIntent().getExtras().get("tipo");
+        matri = getIntent().getExtras().getString("matricula");
 
-        modelo=findViewById(R.id.modelo);
-        matricula=findViewById(R.id.matricula);
-        precioHora=findViewById(R.id.precioHora);
-        descripcion=findViewById(R.id.descripcion);
-        bateria=findViewById(R.id.bateria);
-        fecha=findViewById(R.id.fecha);
-
-
-
-        numplazas=findViewById(R.id.numplazas);
-        numpuertas=findViewById(R.id.numPuertas);
-
-        cilindrada=findViewById(R.id.cilindrada);
-        velocidadMax=findViewById(R.id.velocidadMax);
-
-        numRuedas=findViewById(R.id.numRuedas);
-        tamanyo=findViewById(R.id.tamanyo);
-
-        spinnerCarnet=findViewById(R.id.spinnerCarnet);
+        modelo = findViewById(R.id.modelo);
+        matricula = findViewById(R.id.matricula);
+        precioHora = findViewById(R.id.precioHora);
+        descripcion = findViewById(R.id.descripcion);
+        bateria = findViewById(R.id.bateria);
+        fecha = findViewById(R.id.fecha);
 
 
+        numplazas = findViewById(R.id.numplazas);
+        numpuertas = findViewById(R.id.numPuertas);
 
-        spinnerEstado=findViewById(R.id.spinnerEstado);
-        spinnerColor=findViewById(R.id.spinnerColor);
-        spinnerTipoBici=findViewById(R.id.spinnerTipoBici);
+        cilindrada = findViewById(R.id.cilindrada);
+        velocidadMax = findViewById(R.id.velocidadMax);
 
-        update =findViewById(R.id.update);
+        numRuedas = findViewById(R.id.numRuedas);
+        tamanyo = findViewById(R.id.tamanyo);
+
+        spinnerCarnet = findViewById(R.id.spinnerCarnet);
+
+
+        spinnerEstado = findViewById(R.id.spinnerEstado);
+        spinnerColor = findViewById(R.id.spinnerColor);
+        spinnerTipoBici = findViewById(R.id.spinnerTipoBici);
+
+        update = findViewById(R.id.update);
 
     }
 
@@ -92,71 +92,71 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
 
     @Override
     public void doInBackground() {
-        switch (tipo){
+        switch (tipo) {
             case MOTO:
-                moto=Connector.getConector().get(Moto.class, url+API.Routes.MOTO +"?matricula="+ matri);
+                moto = Connector.getConector().get(Moto.class, url + API.Routes.MOTO + "?matricula=" + matri);
                 break;
             case COCHE:
-                coche=Connector.getConector().get(Coche.class, url+API.Routes.COCHE +"?matricula="+ matri);
+                coche = Connector.getConector().get(Coche.class, url + API.Routes.COCHE + "?matricula=" + matri);
                 break;
             case BICICLETA:
-                bici=Connector.getConector().get(Bicicleta.class, url+API.Routes.BICI +"?matricula="+ matri);
+                bici = Connector.getConector().get(Bicicleta.class, url + API.Routes.BICI + "?matricula=" + matri);
                 break;
             case PATINETE:
-                patinete=Connector.getConector().get(Patinete.class, url+API.Routes.PATINETE+"?matricula="+ matri);
+                patinete = Connector.getConector().get(Patinete.class, url + API.Routes.PATINETE + "?matricula=" + matri);
                 break;
         }
     }
 
     @Override
     public void doInUI() {
-        switch (tipo){
+        switch (tipo) {
             case MOTO:
-                matricula.setText(""+moto.getMatricula());
-                modelo.setText(""+moto.getMarca());
-                precioHora.setText(""+moto.getPrecioHora());
-                descripcion.setText(""+moto.getDescripcion());
-                fecha.setText(""+moto.getFechaAdq());
-                bateria.setText(""+moto.getBateria());
+                matricula.setText("" + moto.getMatricula());
+                modelo.setText("" + moto.getMarca());
+                precioHora.setText("" + moto.getPrecioHora());
+                descripcion.setText("" + moto.getDescripcion());
+                fecha.setText("" + moto.getFechaAdq());
+                bateria.setText("" + moto.getBateria());
 
                 break;
             case COCHE:
-                matricula.setText(""+coche.getMatricula());
-                modelo.setText(""+coche.getMarca());
-                precioHora.setText(""+coche.getPrecioHora());
-                descripcion.setText(""+coche.getDescripcion());
-                fecha.setText(""+coche.getFechaAdq());
-                bateria.setText(""+coche.getBateria());
+                matricula.setText("" + coche.getMatricula());
+                modelo.setText("" + coche.getMarca());
+                precioHora.setText("" + coche.getPrecioHora());
+                descripcion.setText("" + coche.getDescripcion());
+                fecha.setText("" + coche.getFechaAdq());
+                bateria.setText("" + coche.getBateria());
 
                 break;
             case PATINETE:
-                matricula.setText(""+patinete.getMatricula());
-                modelo.setText(""+patinete.getMarca());
-                precioHora.setText(""+patinete.getPrecioHora());
-                descripcion.setText(""+patinete.getDescripcion());
-                fecha.setText(""+patinete.getFechaAdq());
-                bateria.setText(""+patinete.getBateria());
+                matricula.setText("" + patinete.getMatricula());
+                modelo.setText("" + patinete.getMarca());
+                precioHora.setText("" + patinete.getPrecioHora());
+                descripcion.setText("" + patinete.getDescripcion());
+                fecha.setText("" + patinete.getFechaAdq());
+                bateria.setText("" + patinete.getBateria());
 
                 break;
             case BICICLETA:
-                matricula.setText(""+bici.getMatricula());
-                modelo.setText(""+bici.getMarca());
-                precioHora.setText(""+bici.getPrecioHora());
-                descripcion.setText(""+bici.getDescripcion());
-                fecha.setText(""+bici.getFechaAdq());
-                bateria.setText(""+bici.getBateria());
+                matricula.setText("" + bici.getMatricula());
+                modelo.setText("" + bici.getMarca());
+                precioHora.setText("" + bici.getPrecioHora());
+                descripcion.setText("" + bici.getDescripcion());
+                fecha.setText("" + bici.getFechaAdq());
+                bateria.setText("" + bici.getBateria());
 
                 break;
         }
-        switch (tipo){
+        switch (tipo) {
             case MOTO:
                 cilindrada.setVisibility(View.VISIBLE);
                 velocidadMax.setVisibility(View.VISIBLE);
                 cilindrada.setEnabled(true);
                 velocidadMax.setEnabled(true);
 
-                cilindrada.setText(""+moto.getCilindrada());
-                velocidadMax.setText(""+moto.getVelocidadMax());
+                cilindrada.setText("" + moto.getCilindrada());
+                velocidadMax.setText("" + moto.getVelocidadMax());
 
                 numplazas.setVisibility(View.GONE);
                 numpuertas.setVisibility(View.GONE);
@@ -178,8 +178,8 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 numplazas.setEnabled(true);
                 numpuertas.setEnabled(true);
 
-                numplazas.setText(""+coche.getNumPlazas());
-                numpuertas.setText(""+coche.getNumPuertas());
+                numplazas.setText("" + coche.getNumPlazas());
+                numpuertas.setText("" + coche.getNumPuertas());
 
                 numRuedas.setVisibility(View.GONE);
                 tamanyo.setVisibility(View.GONE);
@@ -217,8 +217,8 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
                 numRuedas.setEnabled(true);
                 tamanyo.setEnabled(true);
 
-                numRuedas.setText(""+patinete.getNumRuedas());
-                tamanyo.setText(""+patinete.getTamanyo());
+                numRuedas.setText("" + patinete.getNumRuedas());
+                tamanyo.setText("" + patinete.getTamanyo());
                 numplazas.setVisibility(View.GONE);
                 numpuertas.setVisibility(View.GONE);
                 numplazas.setEnabled(false);
@@ -239,59 +239,233 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                executeCall(new CallInterface() {
-                    @Override
-                    public void doInBackground() {
-                        Carnet carnet=(Carnet) spinnerCarnet.getSelectedItem();
-                        Color color=(Color)spinnerColor.getSelectedItem();
-                        Estado estado=(Estado) spinnerEstado.getSelectedItem();
-                        switch (tipo){
-                            case MOTO:
-                                Moto auxM=new Moto(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(velocidadMax.getText().toString()),Integer.valueOf(cilindrada.getText().toString()));
-                                result= Connector.getConector().put(Moto.class,auxM, url+API.Routes.MOTO);
-                                break;
-                            case COCHE:
-                                Coche auxC=new Coche(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(numplazas.getText().toString()),Integer.valueOf(numpuertas.getText().toString()));
-                                result= Connector.getConector().put(Coche.class,auxC, url+API.Routes.COCHE);
-                                break;
-                            case BICICLETA:
-                                TipoBici tipoBici=(TipoBici) spinnerTipoBici.getSelectedItem();
-                                Bicicleta auxB=new Bicicleta(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,tipoBici.getStr());
-                                result= Connector.getConector().put(Bicicleta.class,auxB, url+API.Routes.BICI);
-                                break;
-                            case PATINETE:
-                                Patinete auxP=new Patinete(matri,modelo.getText().toString(),descripcion.getText().toString(),Integer.valueOf(bateria.getText().toString()),carnet.getStr(), color.getStr(), estado.getStr(),fecha.getText().toString(),Double.valueOf(precioHora.getText().toString()),tipo,Integer.valueOf(numRuedas.getText().toString()),Integer.valueOf(tamanyo.getText().toString()));
-                                result= Connector.getConector().put(Patinete.class,auxP, url+API.Routes.PATINETE);
-                                break;
-                        }
-                    }
+                Carnet carnet = (Carnet) spinnerCarnet.getSelectedItem();
+                Color color = (Color) spinnerColor.getSelectedItem();
+                Estado estado = (Estado) spinnerEstado.getSelectedItem();
 
-                    @Override
-                    public void doInUI() {
-                        if (result instanceof Result.Success){
-                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Result.Error error =(Result.Error)result;
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                            builder.setMessage(error.getError()).setTitle("Error Update");
-                            AlertDialog alertDialog=builder.create();
-                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
-                        }
+                String mod, fec;
+                mod = modelo.getText().toString();
+                fec = fecha.getText().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+
+                try {
+                    Double.parseDouble(precioHora.getText().toString());
+                }catch (NumberFormatException nfe){
+                    builder.setMessage("El campo del precio no es un numero")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+
+                if (mod.equals("")) {
+                    builder.setMessage("El campo del modelo esta vacio")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else if (bateria.getText().toString().equals("")) {
+                    builder.setMessage("El campo de la bateria esta vacio")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else if(!bateria.getText().toString().matches("[0-9]+")){
+                    builder.setMessage("El campo de la bateria no es un numero entero")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else if (fec.equals("")) {
+                    builder.setMessage("El campo de la fecha esta vacio")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else if (precioHora.getText().toString().equals("")) {
+                    builder.setMessage("El campo del precio es incorrecto")
+                            .setTitle("Falta informacion");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    switch (tipo) {
+                        case MOTO:
+                            if (velocidadMax.getText().toString().equals("")) {
+                                builder.setMessage("El campo de velocidad Maxima esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!velocidadMax.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo de velocidad Maxima no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (cilindrada.getText().toString().equals("")) {
+                                    builder.setMessage("El campo de cilindarda esta vacio")
+                                            .setTitle("Falta informacion");
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                            }else if(!cilindrada.getText().toString().matches("[0-9]+")){
+                                builder.setMessage("El campo de cilindarda no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }else {
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        Moto auxM = new Moto(matri, mod, descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fec, Double.parseDouble(precioHora.getText().toString()), tipo, Integer.parseInt(velocidadMax.getText().toString()), Integer.parseInt(cilindrada.getText().toString()));
+                                        result = Connector.getConector().put(Moto.class, auxM, url + API.Routes.MOTO);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error Update");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                            break;
+                        case COCHE:
+                            if (numplazas.getText().toString().equals("")) {
+                                builder.setMessage("El campo del numero de plazas esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!numplazas.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo del numero de plazas no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (numpuertas.getText().toString().equals("")) {
+                                builder.setMessage("El campo del numero de puertas esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }else if(!numpuertas.getText().toString().matches("[0-9]+")){
+                                builder.setMessage("El campo de cilindarda no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }else {
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        Coche auxC = new Coche(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, Integer.valueOf(numplazas.getText().toString()), Integer.valueOf(numpuertas.getText().toString()));
+                                        result = Connector.getConector().put(Coche.class, auxC, url + API.Routes.COCHE);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error Update");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                            break;
+                        case BICICLETA:
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        TipoBici tipoBici = (TipoBici) spinnerTipoBici.getSelectedItem();
+                                        Bicicleta auxB = new Bicicleta(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, tipoBici.getStr());
+                                        result = Connector.getConector().put(Bicicleta.class, auxB, url + API.Routes.BICI);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error Update");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                            break;
+                        case PATINETE:
+
+                            if (numRuedas.getText().toString().equals("")) {
+                                builder.setMessage("El campo del numero de ruedas esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (!numRuedas.getText().toString().matches("[0-9]+")) {
+                                builder.setMessage("El campo del numero de ruedas no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            } else if (tamanyo.getText().toString().equals("")) {
+                                builder.setMessage("El campo del tamaño esta vacio")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }else if(!tamanyo.getText().toString().matches("[0-9]+")){
+                                builder.setMessage("El campo del tamaño no es un numero entero")
+                                        .setTitle("Falta informacion");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }else {
+                                executeCall(new CallInterface() {
+                                    @Override
+                                    public void doInBackground() {
+                                        Patinete auxP = new Patinete(matri, modelo.getText().toString(), descripcion.getText().toString(), Integer.parseInt(bateria.getText().toString()), carnet.getStr(), color.getStr(), estado.getStr(), fecha.getText().toString(), Double.parseDouble(precioHora.getText().toString()), tipo, Integer.parseInt(numRuedas.getText().toString()), Integer.parseInt(tamanyo.getText().toString()));
+                                        result = Connector.getConector().put(Patinete.class, auxP, url + API.Routes.PATINETE);
+                                    }
+
+                                    @Override
+                                    public void doInUI() {
+                                        if (result instanceof Result.Success) {
+                                            Toast.makeText(getApplicationContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Result.Error error = (Result.Error) result;
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SecundaryActivity.this);
+                                            builder.setMessage(error.getError())
+                                                    .setTitle("Error Update");
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+//                            Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+
+                            break;
                     }
-                });
+                }
             }
         });
 
 
     }
+
     private void crearSpiners() {
 
 
-        carnets=new ArrayList();
+        carnets = new ArrayList();
         adapterCarnets = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, carnets);
         spinnerCarnet.setAdapter(adapterCarnets);
 
-        switch (tipo){
+        switch (tipo) {
             case MOTO:
                 carnets.add(Carnet.AM);
                 carnets.add(Carnet.A);
@@ -305,10 +479,10 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         }
         adapterCarnets.notifyDataSetChanged();
 
-        colores=new ArrayList();
+        colores = new ArrayList();
         adapterColor = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, colores);
         spinnerColor.setAdapter(adapterColor);
-        switch (tipo){
+        switch (tipo) {
             case MOTO:
                 colores.add(Color.VERDE);
                 colores.add(Color.AZUL);
@@ -334,21 +508,21 @@ public class SecundaryActivity extends BaseActivity implements CallInterface {
         }
         adapterColor.notifyDataSetChanged();
 
-        estados=new ArrayList();
+        estados = new ArrayList();
         estados.add(Estado.PREPARADO);
         estados.add(Estado.ALQUILADO);
         estados.add(Estado.BAJA);
         estados.add(Estado.RESERVADO);
-        adapterEstado=new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, estados);
+        adapterEstado = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, estados);
         spinnerEstado.setAdapter(adapterEstado);
 
         switch (tipo) {
             case BICICLETA:
-                tiposBici=new ArrayList();
+                tiposBici = new ArrayList();
                 tiposBici.add(TipoBici.PASEO);
                 tiposBici.add(TipoBici.HIBRIDA);
                 tiposBici.add(TipoBici.MOTANA);
-                adapterTipoBici=new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, tiposBici);
+                adapterTipoBici = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, tiposBici);
                 spinnerTipoBici.setAdapter(adapterTipoBici);
                 break;
         }
