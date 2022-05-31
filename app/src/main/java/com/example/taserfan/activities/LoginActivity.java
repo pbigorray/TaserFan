@@ -59,8 +59,8 @@ public class LoginActivity extends BaseActivity implements CallInterface {
     public void doInBackground() {
         AuthenticationData auth=new AuthenticationData(user.getText().toString(),pass.getText().toString());
         String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this)+ API.Routes.AUTHENTICATE;
-//        result= Connector.getConector().post(Empleado.class,auth,url);
-        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
+        result= Connector.getConector().post(Empleado.class,auth,url);
+//        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
 
     }
 
