@@ -1,6 +1,7 @@
 package com.example.taserfan.activities;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -58,8 +59,8 @@ public class LoginActivity extends BaseActivity implements CallInterface {
     public void doInBackground() {
         AuthenticationData auth=new AuthenticationData(user.getText().toString(),pass.getText().toString());
         String url= GestionPreferencias.getInstance().getIp(this)+":"+GestionPreferencias.getInstance().getPuerto(this)+ API.Routes.AUTHENTICATE;
-        result= Connector.getConector().post(Empleado.class,auth,url);
-//        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
+//        result= Connector.getConector().post(Empleado.class,auth,url);
+        result= Connector.getConector().post(Empleado.class,new AuthenticationData("pepa@mordor.es","1111"),url);
 
     }
 
@@ -69,6 +70,22 @@ public class LoginActivity extends BaseActivity implements CallInterface {
             LoggedInUserRepository.getInstance().login(((Result.Success<Empleado>)result).getData());
             Intent intent = new Intent(getApplicationContext(),VehiculoView.class);
             startActivity(intent);
+
+            /*
+            Esto es por di quieres un mensage de login correcto
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setMessage("Se ha iniciado sesion correctamente")
+                    .setTitle("Login correcto")
+                    .setPositiveButton("Oki", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(intent);
+                        }
+                    });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            */
         }else{
             Result.Error error =(Result.Error)result;
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

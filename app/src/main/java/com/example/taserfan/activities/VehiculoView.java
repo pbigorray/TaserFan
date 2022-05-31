@@ -113,7 +113,12 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
                     @Override
                     public void doInUI() {
                         if (result instanceof Result.Success){
-                            Toast.makeText(getApplicationContext(), "Eliminado correctamente", Toast.LENGTH_SHORT).show();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(VehiculoView.this);
+                            builder.setMessage("El vehiculo se ha eliminado correctamente")
+                                    .setTitle("Eliminado")
+                                    .setPositiveButton("Oki",null);
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         }else {
                             Result.Error error=(Result.Error)result;
                             AlertDialog.Builder builder = new AlertDialog.Builder(VehiculoView.this);
@@ -138,6 +143,7 @@ public class VehiculoView extends BaseActivity implements CallInterface, View.On
     @Override
     protected void onResume() {
         super.onResume();
+        myRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
